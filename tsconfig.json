@@ -19,7 +19,15 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src*"],  
+      "@api/*": ["src/api/*"],
+      "@const/*": ["src/constants/*"],
+      "@types/*": ["src/types/*"],
+      "@helpers/*": ["src/helpers/*"],
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }],
