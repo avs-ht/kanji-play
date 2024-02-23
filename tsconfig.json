@@ -20,9 +20,9 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["src*"],  
+      "@/*": ["src/*"],  
       "@api/*": ["src/api/*"],
       "@const/*": ["src/constants/*"],
       "@types/*": ["src/types/*"],

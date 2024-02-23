@@ -5,4 +5,3 @@
 - RTK Query
 - Tanstack Router
 - clsx
-- Tailwindcss
