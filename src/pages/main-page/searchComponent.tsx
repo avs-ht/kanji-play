@@ -1,3 +1,4 @@
+import { ContainerContextProvider } from '@/stores/containerContext'
 import styles from './searchComponent.module.scss'
 import SearchButton from "./searchComponent/searchButton"
 import SearchField from "./searchComponent/searchField"
@@ -7,7 +8,10 @@ const SearchComponent = () => {
     return (
         <form className={styles.form}>
             <SearchField/>
-            <SearchResult/>
+            <ContainerContextProvider>
+                <SearchResult/>
+            </ContainerContextProvider>
+            
             <SearchButton/>
         </form>
     )

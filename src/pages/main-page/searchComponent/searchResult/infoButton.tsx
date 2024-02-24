@@ -3,7 +3,7 @@ import styles from './infoButton.module.scss'
 const InfoButton: React.FC<{kanji: string}> = (kanji) => {
     return (
         <Link onClick={e => e.stopPropagation()} to={'/kanji/$kanji'} params={kanji}>
-            <button className={styles.button}>i</button>
+            <span className={styles.button}>i</span>
         </Link>
     )
 }

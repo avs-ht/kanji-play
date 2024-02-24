@@ -2,6 +2,8 @@ import styles from './searchResult.module.scss'
 import KANJI, { PAGINATION_STEP } from '@/constants/const'
 import ResultButton from './resultButton'
 import usePKBStore from '@/stores/paginationKanjiBorderStore'
+import { useContext } from 'react'
+import { containerContext } from '@/stores/containerContext'
 
 const ALL_KANA = KANJI.map(kanji => {
     return (
@@ -10,9 +12,11 @@ const ALL_KANA = KANJI.map(kanji => {
 })
 
 const STEP = PAGINATION_STEP
-const Pagination: React.FC<{container: HTMLDivElement}> = ({container}) => {
+const Pagination = () => {
     const PKBTStore = usePKBStore()
-    
+    const usedContainerContext = useContext(containerContext)
+    const container = usedContainerContext?.ref as React.RefObject<HTMLDivElement>;
+
     const rightArrowClickHandler = () => {
         const prev = {
             floor: PKBTStore.floor,
@@ -52,8 +56,7 @@ const Pagination: React.FC<{container: HTMLDivElement}> = ({container}) => {
     }
 
     const toTop = () => {
-            container.scrollTop = 0
-        
+        if (container.current) container.current.scrollTop = 0
     }
     return (
         <> 
