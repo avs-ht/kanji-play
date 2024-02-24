@@ -1,0 +1,41 @@
+.resultContainer {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(30px, 1fr));
+    width: 65%;
+    padding: 15px;
+    border: 5px double black;
+    gap: 15px;
+    max-height: 60vh;
+    overflow: auto;
+    scroll-padding-block: 15px;
+    margin-bottom: 20px;
+    @media (max-width: 1024px) {
+        width: 80%;
+        gap: 10px;
+        grid-template-columns: repeat(5, minmax(30px, 1fr));
+    }
+
+    @media (max-width: 575px) {
+        width: 90%;
+        grid-template-columns: repeat(4, minmax(30px, 1fr));
+        gap: 7px;
+    }
+    @media (max-width: 375px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+.resultButton {
+    line-height: 1;
+    aspect-ratio: 1 / 1;
+    font-size: 3rem;
+    border: 3px solid black;
+    padding: 5px;
+    @media (max-width: 575px) {
+        font-size: 2.3rem;
+    }
+}
+
+.title {
+    font-size: clamp(1.3rem, 3.7vw,2.4rem);
+    font-weight: 600;
+}

@@ -10,13 +10,7 @@ function parseFile(): void {
             return  `"${el}"`
         }).join('\n')
         unlink('kana.json', () => {})
-        appendFile('./kana.json', `
-        {
-            "kanji": [
-                ${kanji}
-            ]
-        }
-        `, () => {
+        appendFile('./kana.json', `{\n"kanji": [\n${kanji}\n]\n}\n`, () => {
             console.log('done')
         })
     })

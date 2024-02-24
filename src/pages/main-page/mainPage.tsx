@@ -1,10 +1,12 @@
-import KANJI from "@/constants/const"
-import { Link } from "@tanstack/react-router"
+import FixHeader from "./fixHeader"
+import SearchComponent from "./searchComponent"
 
 const MainPage = () => {
-    const kanji = `${KANJI[Math.floor(Math.random() *KANJI.length)]}`
     return (
-        <Link to="/kanji/$kanji" params={{kanji: kanji}}>{kanji}</Link>
+        <>
+            <FixHeader />
+            <SearchComponent/>
+        </>
     )
 }
 
