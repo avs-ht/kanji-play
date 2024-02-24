@@ -2,6 +2,6 @@
 ## Second practice project 
 ### v1.0
 - Redux/Redux Toolkit
-- RTK Query
+- Tanstack Query
 - Tanstack Router
 - clsx

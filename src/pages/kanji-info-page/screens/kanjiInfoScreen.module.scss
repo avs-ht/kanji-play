@@ -1,0 +1,47 @@
+.bigKanjiContainer {
+    display: flex;
+    gap: 20px;
+}
+.bigKanji {
+    padding: 10px;
+    border: 3px solid black;
+    line-height: 1;
+    font-size: 4rem;
+    font-weight: 500;
+    width: max-content;
+    aspect-ratio: 1 / 1;
+    margin-bottom: 10px;
+}
+.bigKanjiInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.kanjiInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.kanjiInfoItem {
+    > span {
+        font-size: 1.2rem;
+        margin-right: 5px;
+        display: inline-block;
+    }
+    > ul[data-examples] {
+        padding-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        > li {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            >span {
+                margin-bottom: 10px;
+            }
+        }
+    }
+}

@@ -1,25 +1,26 @@
-import getKanjiInfo from "@/api/kanjiAPI"
-import { useLayoutEffect, useState } from "react"
-import KanjiErrorScreen from "./kanjiErrorScreen"
-import KanjiInfoScreen from "./kanjiInfoScreen"
+import { useQuery } from "@tanstack/react-query"
+import { IKanjiInfoSuccess} from "@/types/kanjiInfoObject"
+import { fetchKanjiInfo } from "@/api/kanjiAPI"
+import KanjiErrorScreen from "./screens/kanjiErrorScreen"
+import KanjiInfoScreen from "./screens/kanjiInfoScreen"
+import KanjiLoadingScreen from "./screens/kanjiLoadingScreen"
 
 const KanjiInfoPage: React.FC<{kanji: string}> = ({kanji}) => {
-    const [kanjiInfo, setKanjiInfo] = useState<object>({})
-    const [isHasError, setHasError] = useState<boolean>(false)
-    useLayoutEffect(() => {
-        getKanjiInfo(kanji).then((data) => {
-            setKanjiInfo(data)
-        }).catch(() => {
-            setHasError(true)
-        })
-    }, [])
-    
-    return (
-        <>
-            {isHasError && <KanjiErrorScreen/>}
-            {!isHasError && <KanjiInfoScreen kanjiInfo={kanjiInfo}/>}
-        </>
-    )
+  const {data, isLoading, isError }= useQuery({
+    queryKey: ["KanjiInfo", kanji], 
+    queryFn: () => fetchKanjiInfo(kanji)} ,
+
+  )
+
+  if (isLoading) {
+    return <KanjiLoadingScreen/>
+  }
+  if (isError || !data || data.hasOwnProperty("error")) {
+    return <KanjiErrorScreen/>
+  }
+  
+  return <KanjiInfoScreen kanjiInfo={data as IKanjiInfoSuccess}/>
 }
+
 
 export default KanjiInfoPage

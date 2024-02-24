@@ -7,9 +7,5 @@ export const Route = createFileRoute('/kanji/$kanji')({
 
 function KanjiPage() {
   const { kanji } = Route.useParams()
-  return (
-    <>
-      <KanjiInfoPage kanji={kanji}/>
-    </>
-  )
+  return <KanjiInfoPage kanji={kanji}/>
 }
