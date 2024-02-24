@@ -1,8 +1,8 @@
 import styles from './searchResult.module.scss'
 import KANJI, { PAGINATION_STEP } from '@/constants/const'
 import ResultButton from './resultButton'
-
 import usePKBStore from '@/stores/paginationKanjiBorderStore'
+
 const ALL_KANA = KANJI.map(kanji => {
     return (
         <ResultButton key={kanji} kanji={kanji}/>
@@ -10,9 +10,9 @@ const ALL_KANA = KANJI.map(kanji => {
 })
 
 const STEP = PAGINATION_STEP
-const Pagination = () => {
+const Pagination: React.FC<{container: HTMLDivElement}> = ({container}) => {
     const PKBTStore = usePKBStore()
-    console.log(PKBTStore)
+    
     const rightArrowClickHandler = () => {
         const prev = {
             floor: PKBTStore.floor,
@@ -50,12 +50,31 @@ const Pagination = () => {
         PKBTStore.setFloor(newBorders.floor)
         PKBTStore.setCeiling(newBorders.ceiling)
     }
+
+    const toTop = () => {
+            container.scrollTop = 0
+        
+    }
     return (
         <> 
         {ALL_KANA.slice(PKBTStore.floor, PKBTStore.ceiling)}
         <div className={styles.paginationButtons}>
-           {PKBTStore.floor > 0 && <button type='button' onClick={leftArrowClickHandler}>{"<"}</button>}
-           {PKBTStore.ceiling < ALL_KANA.length && <button type='button' onClick={rightArrowClickHandler}>{">"}</button>}
+            {
+                PKBTStore.floor > 0 
+                && 
+                <button type='button' onClick={() => {
+                    leftArrowClickHandler()
+                    toTop()
+                }}>{"<"}</button>
+            }
+            {
+                PKBTStore.ceiling < ALL_KANA.length 
+                && 
+                <button type='button' onClick={() => {
+                    rightArrowClickHandler()
+                    toTop()
+                }}>{">"}</button>
+           }
         </div>
         </>
     )

@@ -1,16 +1,17 @@
 .button {
     line-height: 1 ;
-    aspect-ratio: 1/1 ;
+    aspect-ratio: 1 / 1 ;
     border-radius: 50%;
-    width: 20px ;
+    width: 20px;
+    height: 20px;
     background-color: gray ;
     color: white ;
     position: absolute ;
+    display: block;
     top: 0 ;
     right: 0 ;
-    margin: 5px ;
-    display: block ;
-    cursor: grab;
+    margin: 5px;
+    
     @media (max-width: 768px) {
         width: 15px ;
     }
