@@ -2,6 +2,7 @@ import styles from './searchResult.module.scss'
 import useKanjiStore from "@/stores/kanjiStore";
 import clsx from 'clsx';
 import { memo } from "react";
+import InfoButton from './infoButton';
 
 const ResultButton: React.FC<{kanji: string}> = memo(({kanji}) => {
     const selectedKanji = useKanjiStore(state => state.selectedKanji)
@@ -19,7 +20,7 @@ const ResultButton: React.FC<{kanji: string}> = memo(({kanji}) => {
             } 
             addKanji(kanji);
         }}> 
-            {kanji}
+            {kanji} <InfoButton kanji={kanji}/>
         </button>
     )
 })

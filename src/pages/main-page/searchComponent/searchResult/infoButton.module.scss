@@ -1,0 +1,17 @@
+.button {
+    line-height: 1 ;
+    aspect-ratio: 1/1 ;
+    border-radius: 50%;
+    width: 20px ;
+    background-color: gray ;
+    color: white ;
+    position: absolute ;
+    top: 0 ;
+    right: 0 ;
+    margin: 5px ;
+    display: block ;
+    cursor: grab;
+    @media (max-width: 768px) {
+        width: 15px ;
+    }
+}
