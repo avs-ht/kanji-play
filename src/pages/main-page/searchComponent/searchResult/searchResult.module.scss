@@ -56,19 +56,23 @@
     gap: 20px;
 }
 .paginationButtons {
-    width: 300px;
+    
     display: flex;
 
     position: absolute;
     bottom: 0;
     > button {
+        width: clamp(40px,8vw,65px);
+        height: clamp(40px,8vw,65px);
         padding: 5px;
         color: white;
-        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border: 2px solid white;
         z-index: 9999;
         font-weight: 700;
-        font-size: 4rem;
+        font-size: clamp(2rem, 10vw, 4rem);
 
         background-color: black;
     }
