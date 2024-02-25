@@ -12,12 +12,18 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
+import { Route as PlayIndexImport } from './routes/play/index'
 import { Route as KanjiKanjiImport } from './routes/kanji/$kanji'
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PlayIndexRoute = PlayIndexImport.update({
+  path: '/play/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -38,11 +44,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KanjiKanjiImport
       parentRoute: typeof rootRoute
     }
+    '/play/': {
+      preLoaderRoute: typeof PlayIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([IndexRoute, KanjiKanjiRoute])
+export const routeTree = rootRoute.addChildren([
+  IndexRoute,
+  KanjiKanjiRoute,
+  PlayIndexRoute,
+])
 
 /* prettier-ignore-end */
