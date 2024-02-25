@@ -1,9 +1,16 @@
+import { Link } from '@tanstack/react-router'
 import styles from './searchButton.module.scss'
+import { useContext } from 'react'
+import { gameContext } from '@/stores/gameContext'
+import clsx from 'clsx'
+import useKanjiStore from '@/stores/kanjiStore'
 const SearchButton  = () => {
+    const disabled = useKanjiStore(state => !(state.selectedKanji.length > 0))
+    const game = useContext(gameContext)
     return (
-        <button className={styles.button} type='submit' onClick={(e) => {
-            e.preventDefault()
-        }}>Начать игру</button>
+        <Link to='/play' className={clsx(styles.button, disabled && styles.disabled)} type='submit' onClick={() => {
+            game?.setStart(true)
+        }}>Начать игру</Link>
     )
 }
 

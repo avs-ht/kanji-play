@@ -1,41 +1,31 @@
-import { useQuery } from '@tanstack/react-query'
-import styles from './playPage.module.scss'
+import { gameContext } from "@/stores/gameContext"
 import useKanjiStore from "@/stores/kanjiStore"
-import { fetchKanjiInfo } from '@/api/kanjiAPI'
-import { useState } from 'react'
-import { IKanjiInfoSuccess} from "@/types/kanjiInfoObject"
-// TODO: Сниппет для вставки стиля, css module, config
+import { useContext } from "react"
+import ErrorScreen from "./screens/errorScreen"
+import EndScreen from "./screens/endScreen"
+import GameScreen from "./screens/gameScreen/gameScreen"
+
 const PlayPage = () => {
-    const selectedKanji = useKanjiStore(state => state.selectedKanji)
-    const pickRandomN = Math.floor(Math.random() * selectedKanji.length)
-    const selectedKanjiChar = selectedKanji[pickRandomN]
-    const [isAnswerShowed, setAnswerShow] = useState<boolean>(false)
-    
-    const {data, isLoading, isError} = useQuery({
-        queryKey: ["KanjiInfo", selectedKanjiChar],
-        queryFn: () => fetchKanjiInfo(selectedKanjiChar)
-    })
-    console.log(data, isLoading, isError)
+    const game = useContext(gameContext)
+    const kanjiStoreLength = useKanjiStore(state => state.selectedKanji.length)
     return (
-        <div className={styles.container}>
-            Осталось
-            <div className={styles.kanji}>{selectedKanjiChar}</div>
-            <h2>Вспомни значения кандзи (<span className={styles.time}>20с.</span>)</h2>
-            {
-                !isAnswerShowed
-                &&
-                <div className={styles.buttons}>
-                    <button className={styles.rightButton}>Вспомнил!</button>
-                    <button className={styles.wrongButton}>Непомню...</button>
-                </div>
-            }
-            {
-                isAnswerShowed
-                &&
-                <div className={styles.answer}>
-                </div>
-            }
-        </div>
+        <>
+        {
+            game?.isStarted && kanjiStoreLength > 0
+            &&
+            <GameScreen/>
+        } 
+        {
+            game?.isStarted && kanjiStoreLength === 0
+            &&
+            <EndScreen/>
+        } 
+        {
+            !game?.isStarted
+            &&
+            <ErrorScreen/>
+        } 
+        </>
     )
 }
 

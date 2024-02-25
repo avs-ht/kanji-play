@@ -1,0 +1,68 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.amount {
+    margin-bottom: 50px;
+    font-size: 2rem;
+    @media (max-width: 425px) {
+        font-size: 1.4rem;
+    }
+}
+.kanjiCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.kanji {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+.timeTitle {
+    font-size: 1.5rem;
+    @media (max-width: 425px) {
+        font-size: 1rem;
+    }
+}
+.time {
+    font-size: 1.2rem;
+}
+.buttons {
+    padding-top: 20px;
+    display: flex;
+    gap: 20px;
+    > button {
+        padding: 15px 30px;
+        border-radius: 10px;
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+    @media (max-width: 425px) {
+        gap: 10px;
+        > button {
+            font-weight: 500;
+            padding: 5px 10px;
+        }
+    }
+}
+.rightButton {
+    background-color: green;
+}
+.wrongButton {
+    background-color: rgb(29, 202, 255);
+
+}
+.answer {
+    font-size: 1.15rem;
+    margin-bottom: 20px;
+}
+
+.next {
+    padding: 10px 25px;
+    font-size: 1.2rem;
+    background-color:  rgb(192, 154, 255);
+    border-radius: 10px;
+}

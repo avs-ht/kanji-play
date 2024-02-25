@@ -8,4 +8,8 @@
     @media (max-width: 425px) {
         padding-inline: 50px;
     }
+    &.disabled {
+        pointer-events: none;
+        background-color: grey !important;
+    }
 }
