@@ -1,7 +1,7 @@
 import KanjiInfoPage from '@/pages/kanji-info-page/kanjiInfoPage'
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/kanji/$kanji')({
+export const Route = createFileRoute('/kanji-play/kanji/$kanji')({
   component: () => KanjiPage()
 })
 

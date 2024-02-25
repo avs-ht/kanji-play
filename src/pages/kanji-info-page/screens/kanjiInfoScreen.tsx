@@ -5,7 +5,7 @@ const KanjiInfoScreen: React.FC<{kanjiInfo: IKanjiInfoSuccess}> = ({kanjiInfo}) 
     const kanji = kanjiInfo.kanji.character
     const meaning = kanjiInfo.kanji.meaning.english
     const examples = kanjiInfo.examples
-    const strokes = kanjiInfo.kanji.strokes.count
+    const strokes = kanjiInfo.kanji.strokes
     const grade = kanjiInfo.references.grade
     return (
         <>

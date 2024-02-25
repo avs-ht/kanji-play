@@ -1,7 +1,8 @@
+import MainPage from "@/pages/main-page/mainPage"
 import { createFileRoute } from "@tanstack/react-router"
-import MainPage from "../pages/main-page/mainPage"
 
-export const Route = createFileRoute('/')({
+
+export const Route = createFileRoute('/kanji-play/')({
     component: Index,
 })
 

@@ -8,7 +8,7 @@ const SearchButton  = () => {
     const disabled = useKanjiStore(state => !(state.selectedKanji.length > 0))
     const game = useContext(gameContext)
     return (
-        <Link to='/play' className={clsx(styles.button, disabled && styles.disabled)} type='submit' onClick={() => {
+        <Link to='/kanji-play/play' className={clsx(styles.button, disabled && styles.disabled)} type='submit' onClick={() => {
             game?.setStart(true)
             window.scrollTo(0, 0)
         }}>Начать игру</Link>

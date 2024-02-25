@@ -11,24 +11,24 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as IndexImport } from './routes/index'
-import { Route as PlayIndexImport } from './routes/play/index'
-import { Route as KanjiKanjiImport } from './routes/kanji/$kanji'
+import { Route as KanjiPlayIndexImport } from './routes/kanji-play/index'
+import { Route as KanjiPlayPlayIndexImport } from './routes/kanji-play/play/index'
+import { Route as KanjiPlayKanjiKanjiImport } from './routes/kanji-play/kanji/$kanji'
 
 // Create/Update Routes
 
-const IndexRoute = IndexImport.update({
-  path: '/',
+const KanjiPlayIndexRoute = KanjiPlayIndexImport.update({
+  path: '/kanji-play/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const PlayIndexRoute = PlayIndexImport.update({
-  path: '/play/',
+const KanjiPlayPlayIndexRoute = KanjiPlayPlayIndexImport.update({
+  path: '/kanji-play/play/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const KanjiKanjiRoute = KanjiKanjiImport.update({
-  path: '/kanji/$kanji',
+const KanjiPlayKanjiKanjiRoute = KanjiPlayKanjiKanjiImport.update({
+  path: '/kanji-play/kanji/$kanji',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -36,16 +36,16 @@ const KanjiKanjiRoute = KanjiKanjiImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      preLoaderRoute: typeof IndexImport
+    '/kanji-play/': {
+      preLoaderRoute: typeof KanjiPlayIndexImport
       parentRoute: typeof rootRoute
     }
-    '/kanji/$kanji': {
-      preLoaderRoute: typeof KanjiKanjiImport
+    '/kanji-play/kanji/$kanji': {
+      preLoaderRoute: typeof KanjiPlayKanjiKanjiImport
       parentRoute: typeof rootRoute
     }
-    '/play/': {
-      preLoaderRoute: typeof PlayIndexImport
+    '/kanji-play/play/': {
+      preLoaderRoute: typeof KanjiPlayPlayIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -54,9 +54,9 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren([
-  IndexRoute,
-  KanjiKanjiRoute,
-  PlayIndexRoute,
+  KanjiPlayIndexRoute,
+  KanjiPlayKanjiKanjiRoute,
+  KanjiPlayPlayIndexRoute,
 ])
 
 /* prettier-ignore-end */
