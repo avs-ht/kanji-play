@@ -4,4 +4,5 @@ export default interface IKanjiStore {
     setFieldKanji: (kanji: string) => void
     addSelectedKanji: (kanji: string) => void
     deleteSelectedKanji: (kanji: string) => void
+    pushToLast: () => void
 }

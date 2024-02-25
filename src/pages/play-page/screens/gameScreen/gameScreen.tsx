@@ -2,26 +2,32 @@ import { useQuery } from '@tanstack/react-query'
 import styles from './gameScreen.module.scss'
 import useKanjiStore from "@/stores/kanjiStore"
 import { fetchKanjiInfo } from '@/api/kanjiAPI'
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { KANJI_TIMER_TIME } from '@/constants/const'
 import { IKanjiInfoSuccess } from '@/types/kanjiInfoObject'
+import { statContext } from '@/stores/statContext'
 
 const GameScreen = () => {
 
     const selectedKanji = useKanjiStore(state => state.selectedKanji)
     const deleteKanji = useKanjiStore(state => state.deleteSelectedKanji)
-    const pickRandomN = selectedKanji.length - 1
-    const selectedKanjiChar = selectedKanji[pickRandomN]
+    const pushToLast = useKanjiStore(state => state.pushToLast)
+    const statStore = useContext(statContext)
+    
     const [isAnswerShowed, setAnswerShow] = useState<boolean>(false)
     const [time, setTime] = useState<number>(KANJI_TIMER_TIME)
-    const timerRef = useRef<NodeJS.Timeout>()
 
-    let nextFunction = useRef<() => void>(() => {});
+    const timerRef = useRef<NodeJS.Timeout>()
+    const nextFunction = useRef<() => void>(() => {});
+
+    const selectedKanjiChar = selectedKanji[0]
 
     const {data} = useQuery({
         queryKey: ["KanjiInfo", selectedKanjiChar],
         queryFn: () => fetchKanjiInfo(selectedKanjiChar)
     })
+    
+    const meaning = (data as IKanjiInfoSuccess).kanji.meaning.english
 
     useEffect(() => {
         setTime(KANJI_TIMER_TIME)
@@ -57,11 +63,32 @@ const GameScreen = () => {
                                     clearInterval(timerRef.current)
                                 }}>.
                                     <button className={styles.rightButton} onClick={() => {
-                                        nextFunction.current = () => console.log(1)
+                                        nextFunction.current = () => {
+                                            deleteKanji(selectedKanjiChar)
+                                            if (!statStore?.errors) return
+
+                                            if (selectedKanjiChar in statStore.errors) {
+                                                return
+                                            }
+                                            statStore.setAnswers([...statStore.answers, selectedKanjiChar])
+                                        }
 
                                     }}>Вспомнил!</button>
                                     <button className={styles.wrongButton} onClick={() => {
-                                        nextFunction.current = () => console.log(0)
+                                        nextFunction.current = () => {
+                                            if (!statStore?.errors) return
+
+                                            const newErrors = {...statStore.errors}
+
+                                            if (selectedKanjiChar in statStore.errors) {
+                                                newErrors[selectedKanjiChar]+=1
+                                            } else {
+                                                newErrors[selectedKanjiChar] = 0
+                                            }
+
+                                            statStore.setErrors(newErrors)
+                                            pushToLast()
+                                        }
                                     }}>Не помню...</button>
                                 </div>
                             </>
@@ -72,12 +99,11 @@ const GameScreen = () => {
                             &&
                             <>
                                 <div className={styles.answer}>
-                                    Значение: <b>{(data as IKanjiInfoSuccess).kanji.meaning.english}</b>
+                                    Значение: <b>{meaning}</b>
                                 </div>
                                 <button className={styles.next} onClick={() => {
                                     nextFunction.current()
                                     setAnswerShow(false)
-                                    deleteKanji(selectedKanjiChar)
                                 }}>{selectedKanji.length !== 1 ? "Следующий кандзи": "К результатам"}</button>
                             </>
                         }

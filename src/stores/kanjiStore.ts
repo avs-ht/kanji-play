@@ -11,6 +11,11 @@ const useKanjiStore = create<IKanjiStore>((set) => ({
         return {
             selectedKanji: [...state.selectedKanji.slice(0, index), ...state.selectedKanji.slice(index+1)]
         }
+    }),
+    pushToLast: () => set((state) => {
+        return {
+            selectedKanji: [...state.selectedKanji.slice(1), state.selectedKanji[0]]
+        }
     })
 }))
 

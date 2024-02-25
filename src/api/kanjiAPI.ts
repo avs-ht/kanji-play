@@ -15,6 +15,5 @@ export async function fetchKanjiInfo(kanji: string) : Promise<KanjiInfo>{
 	const options = JSON.parse(JSON.stringify(TEMPLATE_OPTIONS));
 	options.url = getURL(kanji)
 	const {data} : {data: KanjiInfo} = await axios.request(options);
-
 	return data
 }
