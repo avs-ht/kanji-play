@@ -8,11 +8,11 @@ export interface IKanjiInfoSuccess {
   radical: Radical;
   references: References;
   examples?: (ExamplesEntity)[] | null;
-} 
+}
 export interface Kanji {
   character: string;
   meaning: Meaning;
-  strokes: number;
+  strokes: {count: number};
   onyomi: Onyomi;
   kunyomi: KunyomiOrName;
   video: Video;
