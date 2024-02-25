@@ -22,13 +22,27 @@ const GameScreen = () => {
 
     const selectedKanjiChar = selectedKanji[0]
 
-    const {data} = useQuery({
+    const {data, isLoading} = useQuery({
         queryKey: ["KanjiInfo", selectedKanjiChar],
         queryFn: () => fetchKanjiInfo(selectedKanjiChar)
     })
-    
-    const meaning = (data as IKanjiInfoSuccess).kanji.meaning.english
+    // const meaning = (data as IKanjiInfoSuccess).kanji.meaning.english
+    const wrongClickHandler = () => {
 
+            if (!statStore?.errors) return
+
+            const newErrors = {...statStore.errors}
+
+            if (selectedKanjiChar in statStore.errors) {
+                newErrors[selectedKanjiChar]+=1
+            } else {
+                newErrors[selectedKanjiChar] = 0
+            }
+
+            statStore.setErrors(newErrors)
+            pushToLast()
+        
+    }
     useEffect(() => {
         setTime(KANJI_TIMER_TIME)
         const timer = setInterval(() => {
@@ -36,6 +50,7 @@ const GameScreen = () => {
                 if (prev - 1 === 0) {
                     setAnswerShow(true)
                     clearInterval(timerRef.current)
+                    nextFunction.current = wrongClickHandler
                 }
                 return prev - 1
             })
@@ -43,6 +58,7 @@ const GameScreen = () => {
         timerRef.current = timer
         return () => clearInterval(timerRef.current)
     }, [selectedKanji])
+
 
 
     return (
@@ -75,20 +91,14 @@ const GameScreen = () => {
 
                                     }}>Вспомнил!</button>
                                     <button className={styles.wrongButton} onClick={() => {
-                                        nextFunction.current = () => {
-                                            if (!statStore?.errors) return
-
-                                            const newErrors = {...statStore.errors}
-
-                                            if (selectedKanjiChar in statStore.errors) {
-                                                newErrors[selectedKanjiChar]+=1
-                                            } else {
-                                                newErrors[selectedKanjiChar] = 0
+                                        if (selectedKanji.length === 1) {
+                                            nextFunction.current = () => {
+                                                wrongClickHandler()
+                                                deleteKanji(selectedKanjiChar)
                                             }
-
-                                            statStore.setErrors(newErrors)
-                                            pushToLast()
+                                            return;
                                         }
+                                        nextFunction.current = wrongClickHandler
                                     }}>Не помню...</button>
                                 </div>
                             </>
@@ -99,7 +109,7 @@ const GameScreen = () => {
                             &&
                             <>
                                 <div className={styles.answer}>
-                                    Значение: <b>{meaning}</b>
+                                    Значение: <b>{isLoading ? "..." : (data as IKanjiInfoSuccess).kanji.meaning.english}</b>
                                 </div>
                                 <button className={styles.next} onClick={() => {
                                     nextFunction.current()

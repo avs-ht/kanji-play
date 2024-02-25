@@ -10,6 +10,7 @@ const SearchButton  = () => {
     return (
         <Link to='/play' className={clsx(styles.button, disabled && styles.disabled)} type='submit' onClick={() => {
             game?.setStart(true)
+            window.scrollTo(0, 0)
         }}>Начать игру</Link>
     )
 }
